@@ -47,17 +47,6 @@ if (${CVPLOT_DEMO})
   endforeach()
 endif()
 
-target_include_directories ( cvplot PUBLIC ../include )
-target_include_directories ( cvplot PRIVATE ../src )
-
-install ( TARGETS cvplot
-          LIBRARY DESTINATION lib
-          ARCHIVE DESTINATION lib
-          RUNTIME DESTINATION bin)
-
-install ( DIRECTORY include DESTINATION .
-          PATTERN CMakeLists.txt EXCLUDE )
-
 if (${CVPLOT_TEST})
   file(GLOB TEST_SOURCES "${PROJECT_SOURCE_DIR}/test/cvplot/*_test.cc")
   foreach(filename ${TEST_SOURCES})
@@ -75,6 +64,7 @@ set(version_config      "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
 set(project_config      "${generated_dir}/${PROJECT_NAME}Config.cmake")
 set(targets_export_name "${PROJECT_NAME}Targets")
 set(namespace           "${PROJECT_NAME}::")
+
 include(GNUInstallDirs)
 write_basic_package_version_file(
     "${version_config}" COMPATIBILITY SameMajorVersion
