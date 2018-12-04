@@ -24,6 +24,7 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC ")
 set(CVPLOT_LIB cvplot)
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
@@ -45,6 +46,17 @@ if (${CVPLOT_DEMO})
     target_link_libraries(${name} ${CVPLOT_LIB} ${OpenCV_LIBS})
   endforeach()
 endif()
+
+target_include_directories ( cvplot PUBLIC ../include )
+target_include_directories ( cvplot PRIVATE ../src )
+
+install ( TARGETS cvplot
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib
+          RUNTIME DESTINATION bin)
+
+install ( DIRECTORY include DESTINATION .
+          PATTERN CMakeLists.txt EXCLUDE )
 
 if (${CVPLOT_TEST})
   file(GLOB TEST_SOURCES "${PROJECT_SOURCE_DIR}/test/cvplot/*_test.cc")
